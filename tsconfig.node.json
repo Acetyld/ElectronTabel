@@ -1,36 +1,11 @@
 {
   "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
-  "include": ["electron.vite.config.*", "src/main/*", "src/preload/*", "src/database/*", "src/entities/*"],
+  "include": ["electron.vite.config.*", "src/main/**/*", "src/preload/*"],
   "compilerOptions": {
     "composite": true,
-    "types": ["electron-vite/node"],
-		"target": "es6",
-		"module": "commonjs",
-		"lib": [
-			"dom",
-			"es6",
-			"es2017",
-			"esnext.asynciterable"
-		],
-		"skipLibCheck": true,
-		"sourceMap": true,
-		"outDir": "./build",
-		"moduleResolution": "node",
-		"removeComments": true,
-		"noImplicitAny": true,
-		"strictNullChecks": true,
-		"strictFunctionTypes": true,
-		"noImplicitThis": true,
-		"noUnusedLocals": false,
-		"noUnusedParameters": false,
-		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"resolveJsonModule": true,
-		"baseUrl": "."
-	},
-	"exclude": ["node_modules"]
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false ,
+    "types": ["electron-vite/node"]
+  }
 }
