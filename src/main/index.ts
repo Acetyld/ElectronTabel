@@ -1,11 +1,11 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import 'reflect-metadata'
-import { createDatabaseConnection } from '../database/database'
-import { Supplier } from '../entities/Supplier.entity'
+import { Supplier } from './entities/Supplier.entity'
 import { ILike, Repository } from 'typeorm'
+import { createDatabaseConnection } from './database/database'
 
 function createWindow(): void {
   // Create the browser window.
@@ -61,7 +61,7 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
-  getSupplierRepository()
+  getSupplierRepository().then()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -79,14 +79,13 @@ app.on('window-all-closed', () => {
 let suppliersRepository: Repository<Supplier>
 
 //handle request to get suppliers
-ipcMain.handle('get-suppliers', async (event, input: string): Promise<Supplier[]> => {
+ipcMain.handle('get-suppliers', async (_, input: string): Promise<Supplier[]> => {
   try {
-    const foundSuppliers = await suppliersRepository.find({
+    return suppliersRepository.find({
       where: {
         name: ILike(`%${input}%`)
       }
     })
-    return foundSuppliers
   } catch (error) {
     console.error(error)
     return []
