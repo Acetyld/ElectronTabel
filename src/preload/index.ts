@@ -1,14 +1,11 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import 'reflect-metadata'
-import { Supplier } from 'src/entities/Supplier.entity'
-
-// Custom APIs for renderer
+import { Supplier } from '../main/entities/Supplier.entity'
+import { IElectronAPI } from './interface'
 const api = {
-  getSuppliers: (input: string): Promise<Supplier[]> => {
-    return ipcRenderer.invoke('get-suppliers', input)
-  }
-}
+  getSuppliers: (input: string): Promise<Supplier[]> => ipcRenderer.invoke('get-suppliers', input)
+} satisfies IElectronAPI
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
