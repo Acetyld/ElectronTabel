@@ -1,27 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, Ref } from 'vue'
-
-interface Supplier {
-  name: string
-}
-
-interface Api {
-  getSuppliers: (input: string) => Promise<Supplier[]>
-}
+import { Supplier } from '../../main/entities/Supplier.entity'
 
 //get api from context bridge
-const api: Api = window.api as Api
 const allSuppliers: Ref<Supplier[]> = ref([])
 const searchInput: Ref<string> = ref('')
 
 //get the suppliers at the start
 onMounted(async () => {
-  allSuppliers.value = await api.getSuppliers('')
+  allSuppliers.value = await window.api.getSuppliers('')
 })
 
 //get found suppliers when the input changes
 watch(searchInput, async (newValue) => {
-  allSuppliers.value = await api.getSuppliers(newValue)
+  allSuppliers.value = await window.api.getSuppliers(newValue)
 })
 </script>
 
