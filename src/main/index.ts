@@ -80,6 +80,7 @@ let suppliersRepository: Repository<Supplier>
 
 //handle request to get suppliers
 ipcMain.handle('get-suppliers', async (_, input: string): Promise<Supplier[]> => {
+  console.log('get..')
   try {
     return suppliersRepository.find({
       where: {
